@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -41,7 +42,9 @@ export default function Home() {
             </Card>
           </Grid>
         </Grid>
+
         <Divider xsDown orientation="vertical" flexItem className="custom-divider"/>
+
         <Grid item xs={12} sm={12} md={8}>
           <Grid container className="custom-container">
             <Typography variant="h6" className="title">
@@ -57,13 +60,18 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions className="custom-button">
-                <Button size="small" variant="contained"
-                  color="secondary">Entrar</Button>
+                <Link to="/event">
+                  <Button size="small" variant="contained"
+                    color="secondary">Entrar
+                  </Button>
+                </Link>
               </CardActions>
             </Card>
+
             <Typography variant="h6" className="title">
               Próximos eventos
             </Typography>
+
             <Card className="root-secondary" style={{marginBottom:'0'}}>
               <CardContent>
                 <Typography className="title2" variant="h6" gutterBottom>
@@ -74,8 +82,11 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions className="custom-button">
-                <Button size="small" variant="contained"
-                  color="#7AB6F6">Ver</Button>
+                <Link to="/event">
+                  <Button size="small" variant="contained"
+                    color="#7AB6F6">Ver
+                  </Button>
+                </Link>
               </CardActions>
             </Card>
             <Card className="root-secondary">
@@ -88,8 +99,11 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions className="custom-button">
-                <Button size="small" variant="contained"
-                  color="#7AB6F6">Ver</Button>
+                <Link to="/event">
+                  <Button size="small" variant="contained"
+                    color="#7AB6F6">Ver
+                  </Button>
+                </Link>
               </CardActions>
             </Card>
 
@@ -107,8 +121,11 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions className="custom-button">
-                <Button size="small" variant="contained"
-                  color="#7AB6F6">Saber mais</Button>
+                <Link to="/event">
+                  <Button size="small" variant="contained"
+                    color="#7AB6F6">Saber mais
+                  </Button>
+                </Link>
               </CardActions>
             </Card>
 
@@ -122,8 +139,10 @@ export default function Home() {
                 </Typography>
               </CardContent>
               <CardActions className="custom-button">
-                <Button size="small" variant="contained"
-                  color="#7AB6F6">Saber mais</Button>
+                <Link to="/event">
+                  <Button size="small" variant="contained"
+                    color="#7AB6F6">Saber mais</Button>
+                  </Link>
               </CardActions>
             </Card>
 

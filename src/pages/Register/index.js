@@ -104,7 +104,7 @@ export default function Register() {
     }
   }
   return (
-    <Grid container component="main">
+    <Grid container component="main" className="custom-register-container">
       <Grid item xs={12} sm={8} container >
       <Grid 
           direction="row"

@@ -3,6 +3,9 @@
 .custom-margin{
   margin-top: 19px !important;
 }
+.custom-margin a {
+  text-decoration: none;
+}
 .title{
   font-family: Roboto;
   font-style: normal;
