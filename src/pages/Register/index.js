@@ -10,6 +10,7 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Hidden from '@material-ui/core/Hidden';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -44,23 +45,13 @@ export default function Register() {
       ]
     },
     {
-      name: "Como você quer participar dos eventos?",
-      type: "select",
-      options: [
-        "Participante",
-        "Pessoa organizadora",
-        "Jornalista"
-      ]
+      name: "Escreve uma mini biografia",
+      type: "area",
     },
     {
       name: "Defina uma nova senha",
       type: "input",
     },
-    {
-      name: "Confirme sua nova senha?",
-      type: "input",
-      end: "yes",
-    }
   ]
   async function handleregister(e) {
     e.preventDefault();
@@ -83,12 +74,12 @@ export default function Register() {
   function handleNext(e) {
     e.preventDefault();
     if (actions.current.state.currentSlide === items.length - 2) {
-      history.push('/incidents/new')
+      history.push('/home')
     }
   }
   function Item(props)
   {
-    if (props.type === "input") {
+    if (props.type === "input" || props.type === "area") {
       return (
         <TextField className="input-width" id="outlined-basic" label={props.name}  variant="outlined" />
       )
@@ -114,24 +105,32 @@ export default function Register() {
   }
   return (
     <Grid container component="main">
-      <Grid item xs={8} >
+      <Grid item xs={12} sm={8} container >
+      <Grid 
+          direction="row"
+          justify="center"
+          alignItems="center"
+          xsDown sm={3}>
+
+        </Grid>
         <Grid 
           direction="row"
           justify="center"
-          alignItems="center">
+          alignItems="center"
+          xs={12} sm={6} className="margin-container">
           <form onSubmit={handleregister} className="form-left">
             
             <CarouselProvider className="center"
             naturalSlideWidth={90}
-            naturalSlideHeight={10}
+            naturalSlideHeight={18}
             totalSlides={items.length}
             dragEnabled={false}
             >
-              <div className="title"> Olá</div>
-              <Slider>
+              <div className="title3"> Olá</div>
+              <Slider id="slider">
               {
                 items.map( (item, index) => {
-                  return  (<Slide style={{border:'none'}} ref={ actions } index={index}>{Item(item)}</Slide>);
+                  return  (<Slide id="slide" style={{border:'none'}} ref={ actions } index={index}>{Item(item)}</Slide>);
                 })
               }
               </Slider>
@@ -143,9 +142,11 @@ export default function Register() {
           </form>
         </Grid>
       </Grid>
-      <Grid item xs={4} >
-        <img src={register} alt="eventos online" className="image-right" />
-      </Grid>
+      <Hidden xsDown>
+        <Grid item xs={4} >
+          <img src={register} alt="eventos online" className="image-right" />
+        </Grid>
+      </Hidden>
     </Grid>
   );
 };
