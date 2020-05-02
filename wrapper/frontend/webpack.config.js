@@ -1,4 +1,8 @@
 module.exports = {
+    output: {
+        filename: "main.js",
+        publicPath: "/static/frontend/"
+    },
     module: {
         rules: [
             {
@@ -25,8 +29,10 @@ module.exports = {
                     {
                         loader: 'file-loader',
                     },
-                ]
+                ],
+
             }
+
         ]
     }
 };

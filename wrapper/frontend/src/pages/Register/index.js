@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './styles.css';
+import register from '../../assets/register.jpeg';
 import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import Grid from '@material-ui/core/Grid';
@@ -124,7 +125,7 @@ export default function Register() {
               totalSlides={items.length}
               dragEnabled={false}
             >
-              <div className="title3"> Olá</div>
+              <div className="title3"> Olá!</div>
               <Slider id="slider">
                 {
                   items.map((item, index) => {
@@ -142,7 +143,7 @@ export default function Register() {
       </Grid>
       <Hidden xsDown>
         <Grid item xs={4} >
-          <img src="static/frontend/register.jpeg" alt="eventos online" className="image-right" />
+          <img src={register} alt="eventos online" className="image-right" />
         </Grid>
       </Hidden>
     </Grid>
