@@ -1,1 +1,1 @@
-web: gunicorn makelinks.wsgi --log-file -
+web: cd makelinks && gunicorn makelinks.wsgi --log-file -
