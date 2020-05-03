@@ -14,4 +14,6 @@ class Match(models.Model):
     event = models.ForeignKey(Event,
                               related_name='matches',
                               on_delete=models.PROTECT)
-    date = models.DateField()
+
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
