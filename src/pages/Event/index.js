@@ -141,19 +141,21 @@ export default function Event() {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [confirmed, setConfirmed] = React.useState(false);
-  const interesses = [
-    {name:'inovação', color:''},
-    {name:'marketing', color:''},
-    {name:'atendimento', color:''},
-    {name:'tecnologia', color:''},
-    {name:'economia digital', color:''},
-    {name:'vendas', color:''},
-  ]
+  const interesses = 
+    {
+      inovacao: false,
+      netoworking: false,
+      atendimento: false,
+      tecnologia: false,
+      economia: false,
+      vendas: false, 
+    }
+  
   const [interes, setInteres] = React.useState(interesses);
   const [split, setSplit] = React.useState(true);
 
   const handleSplit = () => {
-    setSplit(false);
+    setSplit(!split);
   };
 
   const handleNext = () => {
@@ -176,20 +178,14 @@ export default function Event() {
   };
   const handleConfirm = () => {
     setConfirmed(true);
+    setOpen(false);
   }
 
   const handleClose = () => {
     setOpen(false);
   };
   const handleAddInteresse = (name) => {
-    const index = interesses.findIndex(item => item.name === name);
-    const intersse = {
-      name,
-      color: 'primary',
-    }
-    interesses.splice(index,1);
-    interesses.push(intersse);
-    setInteres(interesses);
+    setInteres({ ...interes, [name]: true });
   }
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -198,9 +194,13 @@ export default function Event() {
         *Selecione até três temas
       </p>
       <div className={classes.chips}>
-        {interes.map(item => {
-          return <Chip label={item.name} color={item.color} clickable onClick={()=>handleAddInteresse(item.name)}/>
-        })}
+          <Chip label="inovação" color={interes['inovacao']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('inovacao')}/>
+          <Chip label="networking" color={interes['networking']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('networking')}/>
+          <Chip label="atendimento" color={interes['atendimento']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('atendimento')}/>
+          <Chip label="tecnologia" color={interes['tecnologia']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('tecnologia')}/>
+          <Chip label="economia digital" color={interes['economia']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('economia')}/>
+          <Chip label="vendas" color={interes['vendas']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('vendas')}/>
+        
       </div>
       <FormGroup row>
         <FormControlLabel
@@ -225,7 +225,7 @@ export default function Event() {
           </Button>
         </Grid>
         <Grid item xs={12} sm={12} md={6} style={{textAlign:'right'}}> 
-          <Button variant="contained" color="secondary" onClick={handleClose} >
+          <Button variant="contained" color="secondary" onClick={handleConfirm} >
             Confirmar
           </Button>
         </Grid>
@@ -365,7 +365,7 @@ export default function Event() {
                   <p className="networking-text">*Neste evento, a dinâmica vai permitir que cada videochamada dure até 5 minutos!</p>
                 </div>
                 <Button size="small" variant="contained" style={{margin:'27px'}}
-                  color="secondary" onClick={handleConfirm}>Confirmar presença
+                  color="secondary" onClick={handleOpen}>Confirmar presença
                 </Button>
                 <div className="networking-text-container">
                   <p className="networking-text">
@@ -380,7 +380,7 @@ export default function Event() {
                   <p className="networking-text">PRESENÇA CONFIRMADA! Agora você já pode começar a dinâmica.</p>
                 </div>
                 <Button size="small" variant="contained" style={{margin:'27px'}}
-                  color="secondary" onClick={handleOpen}>Começar
+                  color="secondary" >Começar
                 </Button>
                 <div className="networking-text-container">
                   <p className="networking-text">

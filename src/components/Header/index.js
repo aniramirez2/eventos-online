@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './styles.css';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,6 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import PeopleIcon from '@material-ui/icons/People';
 import Avatar from '@material-ui/core/Avatar';
 import logoImg from '../../assets/logo.svg';
+import Link from '@material-ui/core/Link';
+import { useHistory } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -36,14 +39,41 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
+  const history = useHistory();
+  const [colorIcon, setColorIcon] = useState('primary');
+
+  useEffect(() => {
+    const routes = window.location.href.split('/');
+    if(routes[3] === 'reports'){
+      setColorIcon('secondary');
+    } else {
+      setColorIcon('primary');
+    }
+  }, []);
 
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.customApp}>
         <Toolbar>
-          <PeopleIcon />
+          <Link
+            component="button"
+            color="inherit"
+            onClick={() => {
+              history.push('/reports');
+            }}
+            >
+           <PeopleIcon color={colorIcon} />
+          </Link>
           <div className="header-logo">
-            <img src={logoImg} alt="Make Links" />
+            <Link
+              component="button"
+              color="inherit"
+              onClick={() => {
+                history.push('/home');
+              }}
+            >
+              <img src={logoImg} alt="Make Links" />
+              </Link>
           </div>
           <Typography variant="h5" className={classes.title}>
             Nome da pessoa

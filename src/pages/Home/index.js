@@ -82,7 +82,7 @@ export default function Home() {
               <CardActions className="custom-button">
                 <Link to="/event">
                   <Button size="small" variant="contained"
-                    color="#7AB6F6">Ver
+                    style={{backgroundColor:'#7AB6F6'}}>Ver
                   </Button>
                 </Link>
               </CardActions>
@@ -99,7 +99,7 @@ export default function Home() {
               <CardActions className="custom-button">
                 <Link to="/event">
                   <Button size="small" variant="contained"
-                    color="#7AB6F6">Ver
+                    style={{backgroundColor:'#7AB6F6'}}>Ver
                   </Button>
                 </Link>
               </CardActions>
@@ -121,7 +121,7 @@ export default function Home() {
               <CardActions className="custom-button">
                 <Link to="/event">
                   <Button size="small" variant="contained"
-                    color="#7AB6F6">Saber mais
+                    >Saber mais
                   </Button>
                 </Link>
               </CardActions>
@@ -139,7 +139,7 @@ export default function Home() {
               <CardActions className="custom-button">
                 <Link to="/event">
                   <Button size="small" variant="contained"
-                    color="#7AB6F6">Saber mais</Button>
+                    >Saber mais</Button>
                   </Link>
               </CardActions>
             </Card>

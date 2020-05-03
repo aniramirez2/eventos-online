@@ -5,22 +5,15 @@ import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
 
 export default function Register() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
-  const [city, setCity] = useState('');
-  const [uf, setUf] = useState('');
   const history = useHistory();
-  const actions = useRef(null);
-  const button = useRef({className: 'disabled'});
   const items = [
     {
       name: "Qual é seu nome?",
@@ -56,38 +49,19 @@ export default function Register() {
   ]
   async function handleregister(e) {
     e.preventDefault();
-    const data = {
-      name,
-      email,
-      whatsapp,
-      city,
-      uf
-    }
-    try {
-      const response = await api.post('ongs', data);
-      history.push('/');
-      alert(`Seu ID de acesso ${response.data.id}`)
-    } catch (err) {
-      alert('Erro no cadastro, tente novamente');
-    }
 
   }
   function handleNext(e) {
     e.preventDefault();
-    console.log(actions.current.state.currentSlide);
-    if(actions.current.state.currentSlide === 0) {
-      console.log(button.current);
-    }
-    if (actions.current.state.currentSlide === items.length - 2) {
       history.push('/home')
-    }
+    
   }
   function Item(props)
   {
     if (props.type === "input" || props.type === "area") {
       if(props.type === "area") {
         return (<TextField  multiline className="input-width"
-        rowsMax={2} label={props.name} variant="outlined" />)
+        rowsMax={4} label={props.name} variant="outlined" />)
       } else {
         return (
           <TextField className="input-width" id="outlined-basic" label={props.name}  variant="outlined" />
@@ -129,29 +103,16 @@ export default function Register() {
           alignItems="center"
           xs={12} sm={6} className="margin-container">
           <form onSubmit={handleregister} className="form-left">
-            
-            <CarouselProvider className="center"
-            naturalSlideWidth={100}
-            naturalSlideHeight={100}
-            totalSlides={items.length}
-            dragEnabled={false}
-            
-            >
-              <div className="title3"> Olá</div>
-              <Slider id="slider">
+            <div className="title3"> Olá</div>
               {
-                items.map( (item, index) => {
-                  return  (<Slide id="slide" style={{border:'none',borderColor:'transparent'}} ref={ actions } index={index}>{Item(item)}
-                  <div className="actions">
-                    <ButtonBack className="button-prev" ref={ button }>Anterior</ButtonBack>
-                    <ButtonNext className="button-next" onClick={handleNext}>Pŕoximo</ButtonNext>
-                  </div>
-                  </Slide>);
+                items.map( (item) => {
+                  return (<div className="input-custom-space">{Item(item)}</div> )
                 })
               }
-              </Slider>
-              
-            </CarouselProvider>       
+            <div className="actions">
+              <Button color="secondary" variant="contained"
+               onClick={handleNext}>Finalizar</Button>
+            </div>  
           </form>
         </Grid>
       </Grid>

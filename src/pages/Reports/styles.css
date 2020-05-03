@@ -1,0 +1,43 @@
+.root-fourth-active{
+  background-color: #FA7071 !important;
+  color: white !important;
+  width: 100% !important;                                                
+}
+.reports-cusotm-cards{
+    margin: 20px;
+}
+.reports-title{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 18px;
+  /* identical to box height */
+  color: #445998;
+}
+.reports-commons-title{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  color: #666666;
+}
+.reports-about{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #666666;
+}
+.reports-modal-title{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  margin-bottom: 12px;
+  color: #666666;
+}
