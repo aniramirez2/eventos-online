@@ -45,7 +45,6 @@ class OccupationAreaAPI(generics.ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-
     serializer_class = OccupationAreaSerializer
     queryset = OccupationArea.objects.all()
 
@@ -54,16 +53,15 @@ class InterestAPI(generics.ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-
     serializer_class = InterestSerializer
     queryset = Interest.objects.all()
 
 
 class UserAPI(generics.RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
     permission_classes = [
         permissions.IsAuthenticated,
     ]
+    serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
