@@ -11,12 +11,12 @@ def populate_events(apps, schema_editor):
     name = 'DIGITALKS EXPO 2020'
     start_date = datetime(2020, 5, 5)
     end_date = datetime(2020, 5, 5)
-    description = '''
-
-    Em 2019 foram 2 dias de evento com mais de 20 atividades, 11 auditórios com muito conteúdo e presença dos principais formadores de opinião do mercado nacional e internacional.
-
-    DIGITAL ECONOMY | we’re under construction'
-    '''
+    description = (
+        'O DIGITALKS EXPO é o maior evento de Negócios da ECONOMIA DIGITAL e TECNOLOGIA e segue o benchmarking dos maiores eventos da Europa, '
+        'proporcionando uma experiência única e integrada ao mercado mundial. O evento promove um ambiente propício para negócios, novos projetos,'
+        'conexões e compartilhamento de conhecimento.\n\nEm 2019 foram 2 dias de evento com mais de 20 atividades, 11 auditórios com muito '
+        'e presença dos principais formadores de opinião do mercado nacional e internacional.\n\n DIGITAL ECONOMY | we’re under construction'
+    )
 
     Event.objects.create(name=name, description=description,
                          start_date=start_date, end_date=end_date)
