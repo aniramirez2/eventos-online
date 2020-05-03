@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from accounts.managers import UserManager
+
 from events.models import Event
 
 
@@ -9,6 +11,8 @@ class OccupationArea(models.Model):
 
 
 class User(AbstractUser):
+    objects = UserManager()
+
     username = None
     first_name = None
     last_name = None
@@ -17,10 +21,11 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     email = models.EmailField(unique=True)
+    professional_email = models.EmailField(blank=True)
 
     name = models.CharField(max_length=200)
     description = models.TextField()
-    linkedin_url = models.CharField(max_length=150)
+    linkedin_url = models.CharField(max_length=150, blank=True)
     occupation_area = models.ForeignKey(OccupationArea,
                                         related_name='users',
                                         on_delete=models.PROTECT)
@@ -42,7 +47,8 @@ class UserInterests(models.Model):
     interest = models.ForeignKey(Interest,
                                  related_name="users",
                                  on_delete=models.PROTECT)
-    level = models.IntegerField(choices=InterestLevel.choices)
+    level = models.IntegerField(choices=InterestLevel.choices,
+                                default=InterestLevel.HIGH)
 
 
 class UserEvents(models.Model):
