@@ -25,7 +25,7 @@ class UserInterestsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserInterests
-        fields = ('id', 'interest')
+        fields = ('interest', 'level')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,32 +38,31 @@ class UserSerializer(serializers.ModelSerializer):
                   'linkedin_url', 'occupation_area', 'interests')
 
     def update(self, instance, validated_data):
-        super().update(instance, validated_data)
+        self._format_occupation_area(instance, validated_data)
+        self._format_user_interests(instance, validated_data)
 
-        self._format_occupation_area(instance)
-        self._format_user_interests(instance)
+        super().update(instance, validated_data)
 
         return instance
 
-    def _format_occupation_area(self, instance):
+    def _format_occupation_area(self, instance, validated_data):
         area = self.initial_data.get('occupation_area')
 
         if area:
             instance.occupation_area = OccupationArea.objects.get(
                 pk=area['id']
             )
-
             instance.save()
 
-    def _format_user_interests(self, instance):
+    def _format_user_interests(self, instance, validated_data):
         interests = self.initial_data.get('interests')
 
         if interests:  # NOTE: pro futuro, nao pode simplesmente apagar td
             instance.interests.all().delete()
-
             for interest in interests:
                 UserInterests.objects.create(user=instance,
-                                             interest_id=interest['id'])
+                                             interest_id=interest['id'],
+                                             level=interest['level'])
 
 
 class RegisterSerializer(serializers.ModelSerializer):
