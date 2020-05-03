@@ -38,10 +38,49 @@
 .event-panel{
   width: 100%;
 }
+.networking-text-container {
+  width: 300px;
+  margin: auto;
+}
 .event-description{
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
+}
+.networking-container{
+  text-align: center;
+  justify-content: center;
+}
+.netoworking-img{
+  margin-top: 43px;
+  margin-bottom: 27px;
+}
+.networking-text{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+
+  color: #666666;
+}
+.title-modal{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  color: #666666;
+}
+.subtitle-modal{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+
+  color: #666666;
 }

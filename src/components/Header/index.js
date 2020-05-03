@@ -6,10 +6,16 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import PeopleIcon from '@material-ui/icons/People';
 import Avatar from '@material-ui/core/Avatar';
-
+import logoImg from '../../assets/logo.svg';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    position: 'fixed',
+    top: '0px',
+    width: '100%',
+    overflow: 'hidden',
+    backgroundColor: 'white',
+    zIndex:'1200',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -18,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textAlign: 'right',
     margin: '5px',
+    marginRight: '15px',
+    fontSize:'15px',
+    color:'#404040',
   },
   customApp: {
     backgroundColor: 'white',
@@ -33,7 +42,10 @@ export default function Header() {
       <AppBar position="static" className={classes.customApp}>
         <Toolbar>
           <PeopleIcon />
-          <Typography variant="h6" className={classes.title}>
+          <div className="header-logo">
+            <img src={logoImg} alt="Make Links" />
+          </div>
+          <Typography variant="h5" className={classes.title}>
             Nome da pessoa
           </Typography>
           <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />

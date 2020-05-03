@@ -20,6 +20,7 @@ export default function Register() {
   const [uf, setUf] = useState('');
   const history = useHistory();
   const actions = useRef(null);
+  const button = useRef({className: 'disabled'});
   const items = [
     {
       name: "Qual é seu nome?",
@@ -45,7 +46,7 @@ export default function Register() {
       ]
     },
     {
-      name: "Escreve uma mini biografia",
+      name: "Fale um pouquinho sobre você",
       type: "area",
     },
     {
@@ -73,6 +74,10 @@ export default function Register() {
   }
   function handleNext(e) {
     e.preventDefault();
+    console.log(actions.current.state.currentSlide);
+    if(actions.current.state.currentSlide === 0) {
+      console.log(button.current);
+    }
     if (actions.current.state.currentSlide === items.length - 2) {
       history.push('/home')
     }
@@ -80,9 +85,14 @@ export default function Register() {
   function Item(props)
   {
     if (props.type === "input" || props.type === "area") {
-      return (
-        <TextField className="input-width" id="outlined-basic" label={props.name}  variant="outlined" />
-      )
+      if(props.type === "area") {
+        return (<TextField  multiline className="input-width"
+        rowsMax={2} label={props.name} variant="outlined" />)
+      } else {
+        return (
+          <TextField className="input-width" id="outlined-basic" label={props.name}  variant="outlined" />
+        )
+      }
     } else {
       return (
         <div>
@@ -110,7 +120,7 @@ export default function Register() {
           direction="row"
           justify="center"
           alignItems="center"
-          xsDown sm={3}>
+          xsdown sm={3}>
 
         </Grid>
         <Grid 
@@ -121,23 +131,26 @@ export default function Register() {
           <form onSubmit={handleregister} className="form-left">
             
             <CarouselProvider className="center"
-            naturalSlideWidth={90}
-            naturalSlideHeight={18}
+            naturalSlideWidth={100}
+            naturalSlideHeight={100}
             totalSlides={items.length}
             dragEnabled={false}
+            
             >
               <div className="title3"> Olá</div>
               <Slider id="slider">
               {
                 items.map( (item, index) => {
-                  return  (<Slide id="slide" style={{border:'none'}} ref={ actions } index={index}>{Item(item)}</Slide>);
+                  return  (<Slide id="slide" style={{border:'none',borderColor:'transparent'}} ref={ actions } index={index}>{Item(item)}
+                  <div className="actions">
+                    <ButtonBack className="button-prev" ref={ button }>Anterior</ButtonBack>
+                    <ButtonNext className="button-next" onClick={handleNext}>Pŕoximo</ButtonNext>
+                  </div>
+                  </Slide>);
                 })
               }
               </Slider>
-              <div className="actions">
-                <ButtonBack className="button-prev">Anterior</ButtonBack>
-                <ButtonNext className="button-next" onClick={handleNext}>Pŕoximo</ButtonNext>
-              </div>
+              
             </CarouselProvider>       
           </form>
         </Grid>

@@ -9,6 +9,11 @@
 .custom-register-container{
   background-color: white;
 }
+.disabled{
+  color: rgba(0, 0, 0, 0.26) !important;
+  box-shadow: none !important;
+  background-color: rgba(0, 0, 0, 0.12) !important;
+}
 .center {
   justify-content: center;
   padding: 20px;
@@ -20,7 +25,15 @@ li {
   padding: 0px;
 }
 .carousel__slider div ul li:focus {
-  outline: none !important;
+  margin: 5px;
+  width: 400px;
+  height: 100px;
+}
+.carousel__slider{
+  padding: 5px;
+}
+.carousel__slider:focus{
+  border-color: transparent !important;
 }
 .button-next {
   background: #FA7071;

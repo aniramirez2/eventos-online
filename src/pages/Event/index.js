@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from './../../components/Header';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -22,6 +20,14 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
+import networkingImg from '../../assets/tela-networking 1.png'
+import Modal from '@material-ui/core/Modal';
+import Chip from '@material-ui/core/Chip';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import FormGroup from '@material-ui/core/FormGroup';
+import TextField from '@material-ui/core/TextField';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -41,8 +47,18 @@ function TabPanel(props) {
     </div>
   );
 }
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 function getSteps() {
-  return ['Abertura', 'Networking', 'Paineís', 'Encerramento'];
+  return ['Abertura', 'Networking', 'Painéis', 'Encerramento'];
 }
 
 function getStepContent(step) {
@@ -96,6 +112,25 @@ const useStyles = makeStyles((theme) => ({
   resetContainer: {
     padding: theme.spacing(3),
   },
+  paper: {
+    position: 'absolute',
+    width: 700,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: '32px 32px',
+  },
+  chips: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.4),
+    },
+    width: '300px',
+    margin: 'auto',
+    marginTop: '20px',
+    marginBottom: '30px',
+  },
 }));
 
 export default function Event() {
@@ -103,6 +138,23 @@ export default function Event() {
   const [value, setValue] = React.useState(0);
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  const [confirmed, setConfirmed] = React.useState(false);
+  const interesses = [
+    {name:'inovação', color:''},
+    {name:'marketing', color:''},
+    {name:'atendimento', color:''},
+    {name:'tecnologia', color:''},
+    {name:'economia digital', color:''},
+    {name:'vendas', color:''},
+  ]
+  const [interes, setInteres] = React.useState(interesses);
+  const [split, setSplit] = React.useState(true);
+
+  const handleSplit = () => {
+    setSplit(false);
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -119,7 +171,67 @@ export default function Event() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleConfirm = () => {
+    setConfirmed(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleAddInteresse = (name) => {
+    const index = interesses.findIndex(item => item.name === name);
+    const intersse = {
+      name,
+      color: 'primary',
+    }
+    interesses.splice(index,1);
+    interesses.push(intersse);
+    setInteres(interesses);
+  }
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <p className="title-modal">Sobre o que você quer conversar hoje?</p>
+      <p className="subtitle-modal">
+        *Selecione até três temas
+      </p>
+      <div className={classes.chips}>
+        {interes.map(item => {
+          return <Chip label={item.name} color={item.color} clickable onClick={()=>handleAddInteresse(item.name)}/>
+        })}
+      </div>
+      <FormGroup row>
+        <FormControlLabel
+          control={<Switch checked={split} onChange={handleSplit} name="checkedA" />}
+          label="Compartilhar meus contatos profissionais"
+        />
+      </FormGroup>
+
+      <Grid container style={{marginTop:'20px', marginBottom:'30px'}}>
+        <Grid item xs={12} sm={12} md={6}> 
+          <TextField id="standard-basic" label="Linkedin" style={{width:'90%'}}/>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+          <TextField id="standard-basic" label="Email" style={{width:'90%'}}/>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item xs={12} sm={12} md={6}>
+          <Button variant="contained" onClick={handleClose} >
+            Cancelar
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} style={{textAlign:'right'}}> 
+          <Button variant="contained" color="secondary" onClick={handleClose} >
+            Confirmar
+          </Button>
+        </Grid>
+      </Grid>
+    </div>
+  );
   return (
     <div>
       <Header/>
@@ -246,9 +358,48 @@ export default function Event() {
                 </Grid> 
               </Grid>
             </TabPanel>
+            <TabPanel value={value} index={2} className="event-panel networking-container">
+              <div style={{ display: !confirmed ? "block" : "none" }}>
+                <img src={networkingImg} alt="make links networking" className="netoworking-img"/>
+                <div className="networking-text-container">
+                  <p className="networking-text">*Neste evento, a dinâmica vai permitir que cada videochamada dure até 5 minutos!</p>
+                </div>
+                <Button size="small" variant="contained" style={{margin:'27px'}}
+                  color="secondary" onClick={handleConfirm}>Confirmar presença
+                </Button>
+                <div className="networking-text-container">
+                  <p className="networking-text">
+                    A makelinks vai te apresentar a algumas pessoas que tem interesses em comum com os seus, para que possam ter uma conversa por vídeo realmente construtiva. Vamos lá?
+                  </p>
+                </div>
+              </div>
+
+              <div style={{ display: confirmed ? "block" : "none" }}>
+                <img src={networkingImg} alt="make links networking" className="netoworking-img"/>
+                <div className="networking-text-container">
+                  <p className="networking-text">PRESENÇA CONFIRMADA! Agora você já pode começar a dinâmica.</p>
+                </div>
+                <Button size="small" variant="contained" style={{margin:'27px'}}
+                  color="secondary" onClick={handleOpen}>Começar
+                </Button>
+                <div className="networking-text-container">
+                  <p className="networking-text">
+                  A makelinks vai te apresentar a algumas pessoas que tem interesses em comum com os seus, para que possam ter uma conversa por vídeo realmente construtiva. Vamos lá?
+                  </p>
+                </div>
+              </div>
+            </TabPanel>
           </Grid>
         </Grid>
       </Grid>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
     </div>
   );
 }

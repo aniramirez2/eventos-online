@@ -43,9 +43,7 @@ export default function Home() {
           </Grid>
         </Grid>
 
-        <Divider xsDown orientation="vertical" flexItem className="custom-divider"/>
-
-        <Grid item xs={12} sm={12} md={8}>
+        <Grid item xs={12} sm={12} md={9} className="home-border-container">
           <Grid container className="custom-container">
             <Typography variant="h6" className="title">
               Eventos acontecendo agora

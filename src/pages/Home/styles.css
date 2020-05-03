@@ -1,7 +1,9 @@
-.custom-divider{
+.home-border-container{
+  border-left: solid 1px grey;
+  height: max-content;
 }
 .custom-margin{
-  margin-top: 19px !important;
+  margin-top: 85px !important;
 }
 .custom-margin a {
   text-decoration: none;
@@ -15,7 +17,8 @@
   color: #445998;
 }
 .custom-container{
-  padding: 19px !important;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 .custom-button{
   margin-right: 15px !important;
