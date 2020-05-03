@@ -30,9 +30,15 @@ class User(AbstractUser):
                                         related_name='users',
                                         on_delete=models.PROTECT)
 
+    def __str__(self):
+        return f'(id={self.pk}, email={self.email}, name={self.name})'
+
 
 class Interest(models.Model):
     name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return f'(id={self.pk}, name={self.name})'
 
 
 class UserInterests(models.Model):
@@ -47,8 +53,10 @@ class UserInterests(models.Model):
     interest = models.ForeignKey(Interest,
                                  related_name="users",
                                  on_delete=models.PROTECT)
-    level = models.IntegerField(choices=InterestLevel.choices,
-                                default=InterestLevel.HIGH)
+    level = models.IntegerField(choices=InterestLevel.choices)
+
+    def __str__(self):
+        return f'(id={self.pk}, user={self.user}, interest={self.interest}, level={self.level})'
 
 
 class UserEvents(models.Model):
