@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'knox',
     'events',
     'accounts',
-    'networking'
+    'matching'
 ]
 
 REST_FRAMEWORK = {

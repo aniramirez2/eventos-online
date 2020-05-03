@@ -4,14 +4,14 @@ from accounts.models import User
 from events.models import Event
 
 
-class Connection(models.Model):
+class Match(models.Model):
     right_user = models.ForeignKey(User,
-                                   related_name='right_user_connections',
+                                   related_name='right_user_matches',
                                    on_delete=models.PROTECT)
     left_user = models.ForeignKey(User,
-                                  related_name='left_user_connections',
+                                  related_name='left_user_matches',
                                   on_delete=models.PROTECT)
     event = models.ForeignKey(Event,
-                              related_name='connections',
+                              related_name='matches',
                               on_delete=models.PROTECT)
     date = models.DateField()
