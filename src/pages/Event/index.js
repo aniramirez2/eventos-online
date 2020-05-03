@@ -21,6 +21,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Paper from '@material-ui/core/Paper';
 import networkingImg from '../../assets/tela-networking 1.png'
+import panelImg from '../../assets/paineis.png'
+import expositorsImg from '../../assets/expositores.png'
 import Modal from '@material-ui/core/Modal';
 import Chip from '@material-ui/core/Chip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -307,8 +309,8 @@ export default function Event() {
               </Typography>
               <iframe width="100%" height="400" 
                 src="https://www.youtube.com/embed/xm4LX5fJKZ8?list=PLcCp4mjO-z98WAu4sd0eVha1g-NMfzHZk" 
-                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
+                frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen>
               </iframe>
 
               <Typography className="event-subtitle" variant="h6" gutterBottom>
@@ -358,6 +360,14 @@ export default function Event() {
                 </Grid> 
               </Grid>
             </TabPanel>
+            <TabPanel value={value} index={1} className="event-panel networking-container">
+              <img src={panelImg} alt="make links paineis" className="netoworking-img"/>
+              <div className="networking-text-container">
+                <p className="networking-text">
+                  Os painéis ainda não começaram, mas à make<b>links</b> vai te avisar quando for a hora!
+                </p>
+              </div>
+            </TabPanel>
             <TabPanel value={value} index={2} className="event-panel networking-container">
               <div style={{ display: !confirmed ? "block" : "none" }}>
                 <img src={networkingImg} alt="make links networking" className="netoworking-img"/>
@@ -387,6 +397,14 @@ export default function Event() {
                   A makelinks vai te apresentar a algumas pessoas que tem interesses em comum com os seus, para que possam ter uma conversa por vídeo realmente construtiva. Vamos lá?
                   </p>
                 </div>
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={3} className="event-panel networking-container">
+              <img src={expositorsImg} alt="make links paineis" className="netoworking-img"/>
+              <div className="networking-text-container">
+                <p className="networking-text">
+                  Este evento não tem expositores :(
+                </p>
               </div>
             </TabPanel>
           </Grid>

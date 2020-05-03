@@ -14,6 +14,7 @@ import FormatQuoteIcon from '@material-ui/icons/FormatQuote';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -45,17 +46,7 @@ export default function Reports() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
-  useEffect(() => {
-    setOpen(true);
-  }, []);
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="reports-modal-title">A dinâmica de networking já terminou :(</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-    </div>
-  );
+
 
   const handleOpen = () => {
     setOpen(true);
@@ -64,6 +55,27 @@ export default function Reports() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <div className="reports-modal-title">
+        Tem certeza que deseja excluir o cartão?
+      </div>
+      <p id="simple-modal-description" style={{marginBottom:'41px'}}>
+        Se deletar este cartão você perderá todas as suas informações.
+      </p>
+      <div style={{display:'flex', justifyContent:'space-between'}}>
+        <Button variant="contained" onClick={handleClose} >
+          VOLTAR
+        </Button>
+        <Button variant="contained" color="secondary" onClick={handleClose} >
+          EXCLUIR
+        </Button>
+      </div>
+    </div>
+  );
+
+  
 
   return (
     <div>
@@ -139,7 +151,7 @@ export default function Reports() {
                         <FormatQuoteIcon color="secondary" />
                       </div>
                       <div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
-                        <DeleteIcon color="action" />
+                        <DeleteIcon color="action" onClick={handleOpen} />
                         <FavoriteIcon color="action" />
                       </div>
                     </Grid>
@@ -182,7 +194,7 @@ export default function Reports() {
                         <FormatQuoteIcon color="secondary" />
                       </div>
                       <div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
-                        <DeleteIcon color="action" />
+                        <DeleteIcon color="action" onClick={handleOpen} />
                         <FavoriteIcon color="action" />
                       </div>
                     </Grid>

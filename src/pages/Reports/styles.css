@@ -41,3 +41,12 @@
   margin-bottom: 12px;
   color: #666666;
 }
+#simple-modal-description{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #666666;
+}
