@@ -5,6 +5,9 @@ from events.models import Event
 
 
 class Match(models.Model):
+    start_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+
     user = models.ForeignKey(User,
                              related_name='user_matchings',
                              on_delete=models.PROTECT)
@@ -14,13 +17,11 @@ class Match(models.Model):
     event = models.ForeignKey(Event,
                               related_name='matchings',
                               on_delete=models.PROTECT)
-    slot = models.IntegerField()
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
 
 
 class MatchRecommentation(models.Model):
     score = models.FloatField()
+
     user = models.ForeignKey(User,
                              related_name='user_match_recommendations',
                              on_delete=models.PROTECT)
