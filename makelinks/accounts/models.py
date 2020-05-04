@@ -41,7 +41,7 @@ class Interest(models.Model):
         return f'(id={self.pk}, name={self.name})'
 
 
-class UserInterests(models.Model):
+class UserInterest(models.Model):
     class InterestLevel(models.IntegerChoices):
         HIGH = 1
         MEDIUM = 2
@@ -59,7 +59,7 @@ class UserInterests(models.Model):
         return f'(id={self.pk}, user={self.user}, interest={self.interest}, level={self.level})'
 
 
-class UserEvents(models.Model):
+class UserEvent(models.Model):
     user = models.ForeignKey(User,
                              related_name='events',
                              on_delete=models.CASCADE)

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 from accounts.models import (
-    OccupationArea, UserInterests,
+    OccupationArea, UserInterest,
     User, Interest
 )
 
@@ -20,17 +20,17 @@ class InterestSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserInterestsSerializer(serializers.ModelSerializer):
+class UserInterestSerializer(serializers.ModelSerializer):
     interest = InterestSerializer()
 
     class Meta:
-        model = UserInterests
+        model = UserInterest
         fields = ('interest', 'level')
 
 
 class UserSerializer(serializers.ModelSerializer):
     occupation_area = OccupationAreaSerializer()
-    interests = UserInterestsSerializer(many=True, read_only=True)
+    interests = UserInterestSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
@@ -61,9 +61,9 @@ class UserSerializer(serializers.ModelSerializer):
         if interests:  # NOTE: pro futuro, nao pode simplesmente apagar td
             instance.interests.all().delete()
             for interest in interests:
-                UserInterests.objects.create(user=instance,
-                                             interest_id=interest['id'],
-                                             level=interest['level'])
+                UserInterest.objects.create(user=instance,
+                                            interest_id=interest['id'],
+                                            level=interest['level'])
 
 
 class RegisterSerializer(serializers.ModelSerializer):
