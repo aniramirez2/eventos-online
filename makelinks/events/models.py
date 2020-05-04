@@ -11,3 +11,18 @@ class Event(models.Model):
 
     def __str__(self):
         return f'(id={self.pk}, name={self.name})'
+
+
+class State(models.Model):
+    class StateChoices(models.IntegerChoices):
+        MATCHES_CONFIRMED = 1
+
+    state = models.IntegerField(choices=StateChoices.choices)
+
+    value = models.CharField(max_length=254)
+    event = models.ForeignKey(Event,
+                              related_name='states',
+                              on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'(name={self.state}, value={self.value}, event={self.event})'

@@ -22,6 +22,11 @@ def populate_interests(apps, schema_editor):
         Interest.objects.create(name=interest)
 
 
+# def populate_user(apps, schema_editor):
+#     User = apps.get('accounts', 'User')
+#     AuthToken = apps.gets('knox', 'AuthToken')
+
+
 class Migration(migrations.Migration):
 
     dependencies = [

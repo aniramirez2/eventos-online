@@ -31,3 +31,5 @@ class MatchRecommentation(models.Model):
     event = models.ForeignKey(Event,
                               related_name='match_recommentations',
                               on_delete=models.PROTECT)
+
+

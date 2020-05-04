@@ -47,13 +47,14 @@ class UserInterest(models.Model):
         MEDIUM = 2
         LOW = 3
 
+    level = models.IntegerField(choices=InterestLevel.choices)
+
     user = models.ForeignKey(User,
                              related_name="interests",
                              on_delete=models.PROTECT)
     interest = models.ForeignKey(Interest,
                                  related_name="users",
                                  on_delete=models.PROTECT)
-    level = models.IntegerField(choices=InterestLevel.choices)
 
     def __str__(self):
         return f'(id={self.pk}, user={self.user}, interest={self.interest}, level={self.level})'

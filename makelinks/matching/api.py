@@ -3,9 +3,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from matching.models import MatchRecommentation
-from matching.services import MatchingService
 from matching.serializers import MatchRecommentationSerializer, MatchSerializer
 from matching.mixins import MatchCreateListMixin
+from matching.services import MatchingService
+
+from emails.services import EmailService
 
 
 class MatchTriggerViewSet(viewsets.ViewSet):
@@ -40,3 +42,9 @@ class MatchAPI(MatchCreateListMixin, generics.ListCreateAPIView):
         queryset = queryset | user.match_matchings.all()
 
         return queryset
+
+    def post(self, request, *args, **kwargs):
+        response = self.create(request, *args, **kwargs)
+        EmailService().notify(request.user, response.data)
+
+        return response

@@ -8,8 +8,6 @@ from accounts.models import User
 from matching.models import Match, MatchRecommentation
 from events.models import Event
 
-from matching.constants import MAX_MACTHES
-
 
 class MatchingService():
     def __init__(self):
@@ -50,7 +48,3 @@ class MatchingService():
         users = User.objects.exclude(users)
 
         return users
-
-    # TODO: 2. pick desired connections, max 3 -> record if reacheaded max
-    # TODO: 3. make loose schedule
-    # TODO: 4. send schedule emails

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'events',
     'accounts',
-    'matching'
+    'matching',
+    'emails'
 ]
 
 REST_FRAMEWORK = {
@@ -139,6 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
 
 if os.environ.get('ENV') == 'production':
     django_heroku.settings(locals())
