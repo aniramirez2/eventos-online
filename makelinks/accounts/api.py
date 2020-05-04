@@ -43,15 +43,16 @@ class LoginAPI(generics.GenericAPIView):
 
 class OccupationAreaAPI(generics.ListAPIView):
     permission_classes = [
-        permissions.IsAuthenticated,
+        permissions.AllowAny,
     ]
+
     serializer_class = OccupationAreaSerializer
     queryset = OccupationArea.objects.all()
 
 
 class InterestAPI(generics.ListAPIView):
     permission_classes = [
-        permissions.IsAuthenticated,
+        permissions.AllowAny,
     ]
     serializer_class = InterestSerializer
     queryset = Interest.objects.all()
