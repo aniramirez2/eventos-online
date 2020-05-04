@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './styles.css';
 import Header from './../../components/Header';
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import api from '../../services/api';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -45,8 +46,18 @@ function getModalStyle() {
 export default function Reports() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [list, setList] = React.useState([]);
   const [modalStyle] = React.useState(getModalStyle);
+  const token = localStorage.getItem('makelinks-token');
 
+  useEffect(() => {
+    api.get('network/match', {headers: {
+      Authorization: `Token ${token}`
+    }}).then(response => {
+      setList(response.data);
+      console.log("match lists", response.data);
+    })
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -56,6 +67,12 @@ export default function Reports() {
     setOpen(false);
   };
 
+  const handleEmail = (mail) => {
+    window.location.href = `mailto:${mail}`; 
+  }
+  const handleLinkedin = (linkedin) => {
+    window.location.href = linkedin; 
+  }
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className="reports-modal-title">
@@ -116,7 +133,8 @@ export default function Reports() {
                 Relatorios de networking
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={12} md={6}>
+            { list.map(item => { return (
+            <Grid item xs={12} sm={12} md={6} key={item.match.id}>
               <Card className="reports-cusotm-cards">
                 <CardContent>                    
                   <Grid container className="custom-container">
@@ -127,26 +145,26 @@ export default function Reports() {
                     </Grid>
                     <Grid item xs={12} sm={12} md={8}>
                       <Typography className="reports-title" variant="h6" gutterBottom style={{marginTop: '35px'}}>
-                        Nome do contato
+                        {item.match.name}
                         <div style={{marginTop: '10px'}}>
-                          <MailIcon color="action" />
-                          <LinkedInIcon color="action" />
+                          <MailIcon color="action" onClick={() => handleEmail(item.match.email)} />
+                          <LinkedInIcon color="action" onClick={() => handleLinkedin(item.match.linkedin_url)} />
                         </div>
                       </Typography>
                     </Grid>
                     <Grid container >
-                      <p className="reports-commons-title">
+                      <div className="reports-commons-title">
                         Interesses em comum no evento
-                      </p>
+                      </div>
                       <div style={{marginTop:'20px', marginBottom:'20px'}}>
-                        <Chip style={{marginRight:'16px'}} label="inovação" color="primary"/>
-                        <Chip style={{marginRight:'16px'}} label="marketing" color="primary" />
-                        <Chip style={{marginRight:'16px'}} label="vendas" color="primary"/>
+                        {item.match.interests.map(interest => {
+                          return (<Chip style={{marginRight:'16px'}} label={interest.interest.name} color="primary"/>)
+                        })}                        
                       </div>
                       <div style={{display:'flex'}}>
                         <FormatQuoteIcon color="secondary" style={{ transform: 'scaleX(-1)'}}/>
                         <p className="reports-about">
-                          SOBRE A PESSOA, consectetur adipiscing elit. Suspendisse luctus at orci eget fermentum. Nulla quam nunc, vehicula a velit id, pulvinar accumsan metus. Vestibulum lobortis dolor vel mi pulvinar, et porttitor nibh tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                          {item.match.description}
                         </p>
                         <FormatQuoteIcon color="secondary" />
                       </div>
@@ -158,50 +176,8 @@ export default function Reports() {
                   </Grid>
                 </CardContent>
               </Card>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <Card className="reports-cusotm-cards">
-                <CardContent>                    
-                  <Grid container className="custom-container">
-                    <Grid item xs={12} sm={12} md={4}>
-                      <div style={{textAlign:'center'}}>
-                        <Avatar alt="Remy Sharp" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
-                      </div>
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={8}>
-                      <Typography className="reports-title" variant="h6" gutterBottom style={{marginTop: '35px'}}>
-                        Nome do contato
-                        <div style={{marginTop: '10px'}}>
-                          <MailIcon color="action" />
-                          <LinkedInIcon color="action" />
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid container >
-                      <p className="reports-commons-title">
-                        Interesses em comum no evento
-                      </p>
-                      <div style={{marginTop:'20px', marginBottom:'20px'}}>
-                        <Chip style={{marginRight:'16px'}} label="inovação" color="primary"/>
-                        <Chip style={{marginRight:'16px'}} label="marketing" color="primary" />
-                        <Chip style={{marginRight:'16px'}} label="vendas" color="primary"/>
-                      </div>
-                      <div style={{display:'flex'}}>
-                        <FormatQuoteIcon color="secondary" style={{ transform: 'scaleX(-1)'}}/>
-                        <p className="reports-about">
-                          SOBRE A PESSOA, consectetur adipiscing elit. Suspendisse luctus at orci eget fermentum. Nulla quam nunc, vehicula a velit id, pulvinar accumsan metus. Vestibulum lobortis dolor vel mi pulvinar, et porttitor nibh tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        </p>
-                        <FormatQuoteIcon color="secondary" />
-                      </div>
-                      <div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
-                        <DeleteIcon color="action" onClick={handleOpen} />
-                        <FavoriteIcon color="action" />
-                      </div>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
+            </Grid>)})
+            }
           </Grid>
         </Grid>
       </Grid>

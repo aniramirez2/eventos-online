@@ -270,6 +270,7 @@ export default function Event() {
           <Chip label="vendas" color={interes[5].active ? 'primary' : 'default'} clickable onClick={()=>handleAddInteresse('vendas')}/>
         
       </div>
+
       <FormGroup row>
         <FormControlLabel
           control={<Switch checked={split} onChange={handleSplit} name="checkedA" />}
@@ -277,16 +278,7 @@ export default function Event() {
         />
       </FormGroup>
 
-      <Grid container style={{marginTop:'20px', marginBottom:'30px'}}>
-        <Grid item xs={12} sm={12} md={6}> 
-          <TextField id="standard-basic" label="Linkedin" style={{width:'90%'}}/>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <TextField id="standard-basic" label="Email" style={{width:'90%'}}/>
-        </Grid>
-      </Grid>
-
-      <Grid container>
+      <Grid container style={{marginTop:'20px'}}>
         <Grid item xs={12} sm={12} md={6}>
           <Button variant="contained" onClick={handleClose} >
             Cancelar

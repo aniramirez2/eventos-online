@@ -54,6 +54,7 @@ li {
 }
 .actions {
   margin-top: 20px;
+  margin-bottom: 20px;
   justify-content: end;
   text-align: right;
 }
@@ -83,10 +84,10 @@ li {
   justify-content: center;
   display: flex;
   color: #445998;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 .image-right {
-  height: 99vh;
+  height: auto;
   width: -webkit-fill-available;
 }
 .form-left {

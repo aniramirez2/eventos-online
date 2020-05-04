@@ -20,6 +20,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [description, setDescription] = useState('');
   const [occupation, setOcuppation] = useState([]);
+  const [linkedin_url, setLinkedin] = useState('');
   
   useEffect(() => {
     api.get('occupation_areas').then(response => {
@@ -36,10 +37,12 @@ export default function Register() {
       email,
       occupation_area: Number(occupation_area),
       description,
-      password
+      password,
+      linkedin_url
     }
     try {
       const response = await api.post('auth/register', data);
+      localStorage.setItem('makelinks-user-name', name )
       localStorage.setItem('makelinks-token', response.data.token);
        history.push('/home')
     } catch (err) {
@@ -56,7 +59,7 @@ export default function Register() {
         </Grid>
         <Grid 
           item
-          xs={12} sm={6} className="margin-container" style={{marginTop:'40px'}}>
+          xs={12} sm={6} className="margin-container" style={{marginTop:'10px'}}>
           <form onSubmit={handleregister} className="form-left">
             <div className="title3"> Olá</div>
               <div className="input-custom-space">
@@ -68,6 +71,10 @@ export default function Register() {
                  label="Qual é seu email?" variant="outlined" 
                 value={email}
                 onChange={e => setEmail(e.target.value)}/>
+                <TextField className="input-width" type="text" 
+                 label="Url do LinkedIn" variant="outlined" 
+                value={linkedin_url}
+                onChange={e => setLinkedin(e.target.value)}/>
                 <FormControl variant="outlined" className="input-width">
                 <InputLabel htmlFor="outlined-age-native-simple">Qual sua área de atuação?</InputLabel>
                 <Select
@@ -83,7 +90,7 @@ export default function Register() {
                 </Select>
               </FormControl>
               <TextField  multiline className="input-width"
-                rowsMax={4} label="Fale um pouquinho sobre você" variant="outlined"
+                rows={2} label="Fale um pouquinho sobre você" variant="outlined"
                 value={description}
                 onChange={e => setDescription(e.target.value)} />
               <TextField className="input-width"  type="password" 
@@ -94,7 +101,7 @@ export default function Register() {
               </div> 
             <div className="actions">
               <Button color="secondary" variant="contained"
-               type="submit">Finalizar</Button>
+               type="submit">Entrar</Button>
             </div>  
           </form>
         </Grid>

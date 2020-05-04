@@ -41,7 +41,7 @@ export default function Header() {
   const classes = useStyles();
   const history = useHistory();
   const [colorIcon, setColorIcon] = useState('primary');
-
+  const name = localStorage.getItem('makelinks-user-name');
   useEffect(() => {
     const routes = window.location.href.split('/');
     if(routes[3] === 'reports'){
@@ -76,7 +76,7 @@ export default function Header() {
               </Link>
           </div>
           <Typography variant="h5" className={classes.title}>
-            Nome da pessoa
+            {name}
           </Typography>
           <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
         </Toolbar>
