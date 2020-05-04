@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,7 +30,6 @@ import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
-import LoadingOverlay from 'react-loading-overlay';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -141,7 +140,6 @@ export default function Event() {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [confirmed, setConfirmed] = React.useState(false);
-  const [isActive, setLoading] = React.useState(false);
 
   const interesses = 
     [
@@ -196,14 +194,12 @@ export default function Event() {
         console.log(data.interests)
       }
     });
-    setLoading(true);
     api.patch('auth/user', data,{
       headers: {
         Authorization: `Token ${token}`
       }
-    }).then(response => {
+    }).then(_response => {
       // console.log(response.data);
-      setLoading(false);
     })
   }
 
@@ -332,7 +328,7 @@ export default function Event() {
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0} className="event-panel">
-              <Typography className="event-title" variant="h6" gutterBottom>
+              <Typography className="event-title" component="span" variant="h6" gutterBottom>
                 DIGITALKS expo2020
               </Typography>
               <iframe width="100%" height="400" 
@@ -341,99 +337,108 @@ export default function Event() {
                 allowFullScreen>
               </iframe>
 
-              <Typography className="event-subtitle" variant="h6" gutterBottom>
+              <Typography className="event-subtitle" component="span" variant="h6" gutterBottom>
                 Descrição do evento
               </Typography>
-
-              <p className="event-description">
+              <br /><br />
+              <span className="event-description">
                 O DIGITALKS EXPO é o maior evento de Negócios da ECONOMIA DIGITAL e TECNOLOGIA e segue o benchmarking dos maiores eventos digitais da Europa, proporcionando uma experiência única e integrada ao mercado mundial. O evento promove um ambiente propício para negócios, novos projetos, conexões e compartilhamento de conhecimento.
-              </p>
-              <br />
-              <p className="event-description">
+              </span>
+              <br /><br />
+              <span className="event-description">
                 Em 2019 foram 2 dias de evento com mais de 20 atividades, 11 auditórios com muito conteúdo e presença dos principais formadores de opinião do mercado nacional e internacional. 
-              </p>
+              </span>
               <br />
-              <b>DIGITAL ECONOMY | we’re under construction */</b>
-
-              <Typography className="event-subtitle" variant="h6" gutterBottom>
+              <b>DIGITAL ECONOMY | we’re under construction</b>
+              <br /> <br />
+              <Typography className="event-subtitle" component="span" variant="h6" gutterBottom>
                 Palestrantes
               </Typography>
-              <Grid container className="custom-container">
-                <Grid item xs={12} sm={12} md={3}>
-                  <div style={{textAlign:'center'}}>
-                    <Avatar alt="Remy Sharp" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
-                  </div>
-                  <div><p className="speaker-name">Nome do palestrante</p></div>
+              <br /><br />
+              <Grid container className="custom-container" component="span">
+                <Grid item xs={12} sm={12} md={3} component="span">
+                  <span style={{textAlign:'center'}}>
+                    <Avatar alt="Remy Sharp" component="span" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
+                  </span>
+                  <span className="speaker-name">Nome do palestrante</span>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={3}>
-                  <div style={{textAlign:'center'}}>
-                    <Avatar alt="Remy Sharp" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
-                  </div>
-                  <div><p className="speaker-name">Nome do palestrante</p></div>
+                <Grid item xs={12} sm={12} md={3} component="span">
+                  <span style={{textAlign:'center'}}>
+                    <Avatar alt="Remy Sharp" component="span" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
+                  </span>
+                  <span className="speaker-name">Nome do palestrante</span>
                 </Grid> 
 
-                <Grid item xs={12} sm={12} md={3}>
-                  <div style={{textAlign:'center'}}>
-                    <Avatar alt="Remy Sharp" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
-                  </div>
-                  <div><p className="speaker-name">Nome do palestrante</p></div>
+                <Grid item xs={12} sm={12} md={3} component="span">
+                  <span style={{textAlign:'center'}}>
+                    <Avatar component="span" alt="Remy Sharp" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
+                  </span>
+                  <span className="speaker-name">Nome do palestrante</span>
                 </Grid> 
 
-                <Grid item xs={12} sm={12} md={3}>
-                  <div style={{textAlign:'center'}}>
-                    <Avatar alt="Remy Sharp" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
-                  </div>
-                  <div><p className="speaker-name">Nome do palestrante</p></div>
+                <Grid item xs={12} sm={12} md={3} component="span">
+                  <span style={{textAlign:'center'}} >
+                    <Avatar alt="Remy Sharp" component="span" src="https://randomuser.me/api/portraits/men/75.jpg" className={classes.large} />
+                  </span>
+                  <span className="speaker-name">Nome do palestrante</span>
                 </Grid> 
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1} className="event-panel networking-container">
               <img src={panelImg} alt="make links paineis" className="netoworking-img"/>
-              <div className="networking-text-container">
-                <p className="networking-text">
+              <br />
+              <span className="networking-text-container">
+                <span className="networking-text">
                   Os painéis ainda não começaram, mas à make<b>links</b> vai te avisar quando for a hora!
-                </p>
-              </div>
+                </span>
+              </span>
             </TabPanel>
             <TabPanel value={value} index={2} className="event-panel networking-container">
-              <div style={{ display: !confirmed ? "block" : "none" }}>
+              <span style={{ display: !confirmed ? "block" : "none" }}>
                 <img src={networkingImg} alt="make links networking" className="netoworking-img"/>
-                <div className="networking-text-container">
-                  <p className="networking-text">*Neste evento, a dinâmica vai permitir que cada videochamada dure até 5 minutos!</p>
-                </div>
+                <br />
+                <span className="networking-text-container">
+                  <span className="networking-text">*Neste evento, a dinâmica vai permitir que cada videochamada dure até 5 minutos!</span>
+                </span>
+                <br />
                 <Button size="small" variant="contained" style={{margin:'27px'}}
                   color="secondary" onClick={handleOpen}>Confirmar presença
                 </Button>
-                <div className="networking-text-container">
-                  <p className="networking-text">
+                <br />
+                <span className="networking-text-container">
+                  <span className="networking-text">
                     A makelinks vai te apresentar a algumas pessoas que tem interesses em comum com os seus, para que possam ter uma conversa por vídeo realmente construtiva. Vamos lá?
-                  </p>
-                </div>
-              </div>
+                  </span>
+                </span>
+              </span>
 
-              <div style={{ display: confirmed ? "block" : "none" }}>
+              <span style={{ display: confirmed ? "block" : "none" }}>
                 <img src={networkingImg} alt="make links networking" className="netoworking-img"/>
-                <div className="networking-text-container">
-                  <p className="networking-text">PRESENÇA CONFIRMADA! Agora você já pode começar a dinâmica.</p>
-                </div>
+                <br />
+                <span className="networking-text-container">
+                  <span className="networking-text">PRESENÇA CONFIRMADA! Agora você já pode começar a dinâmica.</span>
+                </span>
+                <br />
                 <Button size="small" variant="contained" style={{margin:'27px'}}
                   color="secondary" onClick={handleGapi}>Começar
                 </Button>
-                <div className="networking-text-container">
-                  <p className="networking-text">
+                <br />
+                <span className="networking-text-container">
+                  <span className="networking-text">
                   A makelinks vai te apresentar a algumas pessoas que tem interesses em comum com os seus, para que possam ter uma conversa por vídeo realmente construtiva. Vamos lá?
-                  </p>
-                </div>
-              </div>
+                  </span>
+                </span>
+              </span>
             </TabPanel>
             <TabPanel value={value} index={3} className="event-panel networking-container">
               <img src={expositorsImg} alt="make links paineis" className="netoworking-img"/>
-              <div className="networking-text-container">
-                <p className="networking-text">
+              <br />
+              <span className="networking-text-container">
+                <span className="networking-text">
                   Este evento não tem expositores :(
-                </p>
-              </div>
+                </span>
+              </span>
             </TabPanel>
           </Grid>
         </Grid>
@@ -446,12 +451,6 @@ export default function Event() {
       >
         {body}
       </Modal>
-      <LoadingOverlay
-        active={isActive}
-        spinner
-        text='Carregando'
-        >
-      </LoadingOverlay>
     </div>
   );
 }

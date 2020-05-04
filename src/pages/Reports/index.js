@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './styles.css';
 import Header from './../../components/Header';
 import Grid from '@material-ui/core/Grid';

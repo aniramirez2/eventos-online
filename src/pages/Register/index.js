@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import './styles.css';
 import register from '../../assets/register.jpeg';
 import { useHistory } from 'react-router-dom';
@@ -39,7 +39,6 @@ export default function Register() {
     }
     try {
       const response = await api.post('auth/register', data);
-      console.log("response register", response);
       localStorage.setItem('makelinks-token', response.data.token);
        history.push('/home')
     } catch (err) {
@@ -50,18 +49,13 @@ export default function Register() {
   return (
     <Grid container component="main" className="custom-register-container">
       <Grid item xs={12} sm={8} container >
-      <Grid 
-          direction="row"
-          justify="center"
-          alignItems="center"
-          xsdown sm={3}>
-
+      <Grid
+          item
+          xsdown="true" sm={3}>
         </Grid>
         <Grid 
-          direction="row"
-          justify="center"
-          alignItems="center"
-          xs={12} sm={6} className="margin-container">
+          item
+          xs={12} sm={6} className="margin-container" style={{marginTop:'40px'}}>
           <form onSubmit={handleregister} className="form-left">
             <div className="title3"> Olá</div>
               <div className="input-custom-space">
@@ -70,7 +64,7 @@ export default function Register() {
                 value={name}
                 onChange={e => setName(e.target.value)} />
                 <TextField className="input-width" type="email" 
-                id="" label="Qual é seu email?" variant="outlined" 
+                 label="Qual é seu email?" variant="outlined" 
                 value={email}
                 onChange={e => setEmail(e.target.value)}/>
                 <FormControl variant="outlined" className="input-width">
@@ -82,8 +76,8 @@ export default function Register() {
                 >
                   <option aria-label="None" value="" />
                   
-                  { occupation.map(item => {
-                    return <option value={+item.id}>{item.name}</option>
+                  { occupation.map((item, index) => {
+                    return <option key={index} value={+item.id}>{item.name}</option>
                   }) }
                 </Select>
               </FormControl>
@@ -91,7 +85,7 @@ export default function Register() {
                 rowsMax={4} label="Fale um pouquinho sobre você" variant="outlined"
                 value={description}
                 onChange={e => setDescription(e.target.value)} />
-              <TextField className="input-width" id="" type="password" 
+              <TextField className="input-width"  type="password" 
                 label="Digite uma senha" variant="outlined"
                 value={password}
                 onChange={e => setPassword(e.target.value)} />
@@ -104,7 +98,7 @@ export default function Register() {
           </form>
         </Grid>
       </Grid>
-      <Hidden xsdown="true">
+      <Hidden xsDown>
         <Grid item xs={4} >
           <img src={register} alt="eventos online" className="image-right" />
         </Grid>
