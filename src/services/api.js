@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://ongs-api.herokuapp.com/'
+  baseURL: 'https://whispering-woodland-29547.herokuapp.com/api/'
 })
 
 export default api;

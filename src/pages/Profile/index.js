@@ -10,9 +10,6 @@ export default function Profile() {
   const history = useHistory();
   const [incidents, setIncidents] = useState([]);
 
-  const ongName = localStorage.getItem('ongName');
-  const ongId = localStorage.getItem('ongId');
-
   useEffect(() => {
     api.get('profile', {
       headers: {

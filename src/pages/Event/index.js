@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,6 +29,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
+import api from '../../services/api';
+import LoadingOverlay from 'react-loading-overlay';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,18 +68,14 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return `For each ad campaign that you create, you can control how much
-              you're willing to spend on clicks and conversions, which networks
-              and geographical locations you want your ads to show on, and more.`;
+      return `Já aconteceu`;
     case 1:
-      return 'An ad group contains one or more ads which target a shared set of keywords.';
+      return `18:30 - 19:00
+      Dinâmica de networking mediada por matchmaking`;
     case 2:
-      return `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`;
+      return `Não tem painéis.`;
     default:
-      return 'Unknown step';
+      return '22:00';
   }
 }
 TabPanel.propTypes = {
@@ -143,15 +141,17 @@ export default function Event() {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [confirmed, setConfirmed] = React.useState(false);
+  const [isActive, setLoading] = React.useState(false);
+
   const interesses = 
-    {
-      inovacao: false,
-      netoworking: false,
-      atendimento: false,
-      tecnologia: false,
-      economia: false,
-      vendas: false, 
-    }
+    [
+      {id:1, nome:'inovacao', active:false},
+      {id:2, nome:'marketing', active:false},
+      {id:3, nome:'atendimento', active:false},
+      {id:4, nome:'tecnologia', active:false},
+      {id:5, nome:'economia digital', active:false},
+      {id:6, nome:'vendas', active:false}, 
+    ]
   
   const [interes, setInteres] = React.useState(interesses);
   const [split, setSplit] = React.useState(true);
@@ -181,13 +181,41 @@ export default function Event() {
   const handleConfirm = () => {
     setConfirmed(true);
     setOpen(false);
+    const token = localStorage.getItem('makelinks-token');
+    const data = {
+      "interests": []
+    }
+    interes.map((item, index) => {
+      if(item.active){
+        const object =
+        {
+          id: item.id,
+          level: index
+        }
+        data.interests.push(object);
+        console.log(data.interests)
+      }
+    });
+    setLoading(true);
+    api.patch('auth/user', data,{
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    }).then(response => {
+      // console.log(response.data);
+      setLoading(false);
+    })
   }
 
   const handleClose = () => {
     setOpen(false);
   };
   const handleAddInteresse = (name) => {
-    setInteres({ ...interes, [name]: true });
+    setInteres(interes.map(objInteres => (objInteres.nome === name ? { ...objInteres, active: !objInteres.active } : objInteres )));
+    //setInteres({ ...interes, [name]: true });
+  }
+  const handleGapi = () => {
+     console.log("hello")
   }
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -196,12 +224,12 @@ export default function Event() {
         *Selecione até três temas
       </p>
       <div className={classes.chips}>
-          <Chip label="inovação" color={interes['inovacao']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('inovacao')}/>
-          <Chip label="networking" color={interes['networking']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('networking')}/>
-          <Chip label="atendimento" color={interes['atendimento']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('atendimento')}/>
-          <Chip label="tecnologia" color={interes['tecnologia']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('tecnologia')}/>
-          <Chip label="economia digital" color={interes['economia']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('economia')}/>
-          <Chip label="vendas" color={interes['vendas']? 'primary' : ''} clickable onClick={()=>handleAddInteresse('vendas')}/>
+          <Chip label="inovação" color={interes[0].active ? 'primary' : 'default'} clickable onClick={()=>handleAddInteresse('inovacao')}/>
+          <Chip label="marketing" color={interes[1].active ? 'primary' : 'default'} clickable onClick={()=>handleAddInteresse('marketing')}/>
+          <Chip label="atendimento" color={interes[2].active ? 'primary' : 'default'} clickable onClick={()=>handleAddInteresse('atendimento')}/>
+          <Chip label="tecnologia" color={interes[3].active ? 'primary' : 'default'} clickable onClick={()=>handleAddInteresse('tecnologia')}/>
+          <Chip label="economia digital" color={interes[4].active ? 'primary' : 'default'} clickable onClick={()=>handleAddInteresse('economia digital')}/>
+          <Chip label="vendas" color={interes[5].active ? 'primary' : 'default'} clickable onClick={()=>handleAddInteresse('vendas')}/>
         
       </div>
       <FormGroup row>
@@ -390,7 +418,7 @@ export default function Event() {
                   <p className="networking-text">PRESENÇA CONFIRMADA! Agora você já pode começar a dinâmica.</p>
                 </div>
                 <Button size="small" variant="contained" style={{margin:'27px'}}
-                  color="secondary" >Começar
+                  color="secondary" onClick={handleGapi}>Começar
                 </Button>
                 <div className="networking-text-container">
                   <p className="networking-text">
@@ -418,6 +446,12 @@ export default function Event() {
       >
         {body}
       </Modal>
+      <LoadingOverlay
+        active={isActive}
+        spinner
+        text='Carregando'
+        >
+      </LoadingOverlay>
     </div>
   );
 }

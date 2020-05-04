@@ -20,6 +20,8 @@
 }
 .input-width{
   width: 100%;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
 }
 li {
   padding: 0px;
