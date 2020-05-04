@@ -35,7 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'name', 'email', 'description',
-                  'linkedin_url', 'occupation_area', 'interests')
+                  'linkedin_url', 'professional_email',
+                  'occupation_area', 'interests')
 
     def update(self, instance, validated_data):
         self._format_occupation_area(instance, validated_data)
