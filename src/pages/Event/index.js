@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,6 +31,10 @@ import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import api from '../../services/api';
+import Loading from 'react-fullscreen-loading';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -133,14 +138,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Event() {
+  const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  const [openMathes, setOpenMatches] = React.useState(false);
   const [confirmed, setConfirmed] = React.useState(false);
-
+  const [isLoading, setLoading] = React.useState(false);
+  const [matchList, setMatchList] = React.useState([]);
+  const token = localStorage.getItem('makelinks-token');
   const interesses = 
     [
       {id:1, nome:'inovacao', active:false},
@@ -179,7 +188,7 @@ export default function Event() {
   const handleConfirm = () => {
     setConfirmed(true);
     setOpen(false);
-    const token = localStorage.getItem('makelinks-token');
+    
     const data = {
       "interests": []
     }
@@ -191,7 +200,6 @@ export default function Event() {
           level: index
         }
         data.interests.push(object);
-        console.log(data.interests)
       }
     });
     api.patch('auth/user', data,{
@@ -206,12 +214,46 @@ export default function Event() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleCloseMatches = () => {
+    setOpenMatches(false);
+  };
+  const goToReports = () => {
+    history.push('/reports');
+  }
+  const handleConnect = (id) => {
+    const data = [
+      {
+        "match": {
+            "id": id
+        }
+      }
+    ]
+    api.post('network/match', data, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    }).then(res =>{
+      console.log("response match", res)
+      goToReports();
+    });
+  }
   const handleAddInteresse = (name) => {
     setInteres(interes.map(objInteres => (objInteres.nome === name ? { ...objInteres, active: !objInteres.active } : objInteres )));
     //setInteres({ ...interes, [name]: true });
   }
   const handleGapi = () => {
-     console.log("hello")
+    setLoading(true);
+    api.post('network/start').then(response => {
+     
+     api.get('network/recommendation', {headers: {
+        Authorization: `Token ${token}`
+      }}).then(response => {
+        setLoading(false);
+        setMatchList(response.data);
+        setOpenMatches(true);
+       console.log("lisr matchings", response.data)
+     })
+    });
   }
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -258,8 +300,35 @@ export default function Event() {
       </Grid>
     </div>
   );
+  const matches = (
+    <div style={modalStyle} className={classes.paper}>
+      <p className="title-modal">Pessoas que tem interesses similares:</p>
+      { matchList.map(item => { return ( 
+        <Card key={item.match.id} className="matching-card">
+          <CardContent>
+            <Typography component="h5" variant="h5">
+              {item.match.name}
+            </Typography>
+            <Typography variant="subtitle1" >
+              {item.match.description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button onClick={() => handleConnect(item.match.id)} 
+              size="small" variant="contained" color="secondary"
+              style={{marginRight: '15px'}}>
+              Conectar
+            </Button>
+          </CardActions>
+        </Card>
+        )})
+      }
+    </div>
+  );
+
   return (
     <div>
+      <Loading Loading={isLoading} background="#2ecc71" loaderColor="#3498db" />
       <Header/>
       <Grid container className="custom-margin">
         <Grid item xs={12} sm={12} md={3}>          
@@ -388,11 +457,11 @@ export default function Event() {
             <TabPanel value={value} index={1} className="event-panel networking-container">
               <img src={panelImg} alt="make links paineis" className="netoworking-img"/>
               <br />
-              <span className="networking-text-container">
+              <div className="networking-text-container">
                 <span className="networking-text">
                   Os painéis ainda não começaram, mas à make<b>links</b> vai te avisar quando for a hora!
                 </span>
-              </span>
+              </div>
             </TabPanel>
             <TabPanel value={value} index={2} className="event-panel networking-container">
               <span style={{ display: !confirmed ? "block" : "none" }}>
@@ -450,6 +519,14 @@ export default function Event() {
         aria-describedby="simple-modal-description"
       >
         {body}
+      </Modal>
+      <Modal
+        open={openMathes}
+        onClose={handleCloseMatches}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {matches}
       </Modal>
     </div>
   );

@@ -12,6 +12,7 @@
     "pure-react-carousel": "^1.27.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-fullscreen-loading": "0.0.4",
     "react-icons": "^3.9.0",
     "react-loading-overlay": "^1.0.1",
     "react-router-dom": "^5.1.2",

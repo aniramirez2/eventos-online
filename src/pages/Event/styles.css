@@ -39,7 +39,7 @@
   width: 100%;
 }
 .networking-text-container {
-  width: 300px;
+  max-width: 300px !important;
   margin: auto;
 }
 .event-description{
@@ -83,4 +83,11 @@
   line-height: 14px;
 
   color: #666666;
+}
+.matching-card{
+  margin: 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  background-color: darkblue !important;
+  color: white !important;
 }

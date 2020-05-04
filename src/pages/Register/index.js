@@ -23,6 +23,7 @@ export default function Register() {
   
   useEffect(() => {
     api.get('occupation_areas').then(response => {
+      console.log('occupations', response.data)
       setOcuppation(response.data);
     })
   }, []);
