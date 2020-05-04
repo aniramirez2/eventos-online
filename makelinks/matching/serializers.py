@@ -15,17 +15,22 @@ class MatchListSerializer(serializers.ListSerializer):
         user = self.context.get('request').user
         instances = []
 
-        for match_id in self.initial_data:
-            match_id = match_id['match']['id']
-            if match_id == user.id:
+        for match in self.initial_data:
+            if match['match']['id'] == user.id:
                 continue
 
-            fields = {'user_id': match_id, 'match': user, 'event_id': 1}
-            if not Match.objects.filter(**fields).exists():
-                fields = {'user': user, 'match_id': match_id, 'event_id': 1}
+            match = match['match']['id']
+            if self.new_match(user, match):
+                fields = {'user': user, 'match_id': match, 'event_id': 1}
                 instances.append(Match(**fields))
 
         return Match.objects.bulk_create(instances)
+
+    def new_match(self, user, match_id):
+        query = Q(user=user, match_id=match_id, event_id=1)
+        query = query | Q(match=user, user_id=match_id, event_id=1)
+
+        return not Match.objects.filter(query).exists()
 
 
 class MatchSerializer(serializers.ModelSerializer):
