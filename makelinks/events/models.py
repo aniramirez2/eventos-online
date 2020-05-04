@@ -8,3 +8,6 @@ class Event(models.Model):
     end_date = models.DateTimeField()
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'(id={self.pk}, name={self.name})'
