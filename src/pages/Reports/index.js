@@ -144,11 +144,15 @@ export default function Reports() {
                       </div>
                     </Grid>
                     <Grid item xs={12} sm={12} md={8}>
-                      <Typography className="reports-title" variant="h6" gutterBottom style={{marginTop: '35px'}}>
+                      <Typography className="reports-title" variant="h6" gutterBottom style={{marginTop: '3px'}}>
                         {item.match.name}
-                        <div style={{marginTop: '10px'}}>
+                        <div style={{marginTop: '5px', display:'flex'}}>
                           <MailIcon color="action" onClick={() => handleEmail(item.match.email)} />
-                          <LinkedInIcon color="action" onClick={() => handleLinkedin(item.match.linkedin_url)} />
+                            <div style={{margin:'5px'}} className="reports-commons-title">{item.match.email}</div>
+                        </div>
+                        <div style={{marginTop: '5px', display:'flex'}}>
+                        <LinkedInIcon color="action" onClick={() => handleLinkedin(item.match.linkedin_url)} />
+                            <div style={{margin:'5px'}} className="reports-commons-title">{item.match.linkedin_url}</div>
                         </div>
                       </Typography>
                     </Grid>
