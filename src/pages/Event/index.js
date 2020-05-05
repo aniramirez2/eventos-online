@@ -62,7 +62,7 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    transform: `translate(-${top}%, -${left}%)`,    
   };
 }
 function getSteps() {
@@ -122,6 +122,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: '32px 32px',
+  },
+  paper2: {
+    position: 'absolute',
+    width: 700,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: '32px 32px',
+    maxHeight: '500px',
+    overflowY: 'scroll',
   },
   chips: {
     display: 'flex',
@@ -293,8 +302,10 @@ export default function Event() {
     </div>
   );
   const matches = (
-    <div style={modalStyle} className={classes.paper}>
+    <div style={modalStyle} className={classes.paper2}>
       <p className="title-modal">Pessoas que tem interesses similares:</p>
+      <br />
+      <p>Assim que você conectar com uma pessoa, enviaremos um email para vocês com um convite no google calendar.</p>
       { matchList.map(item => { return ( 
         <Card key={item.match.id} className="matching-card">
           <CardContent>
